@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,21 +13,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  usuario = '';
-  password = '';
+  id_usuario = '';
+  contrasena = '';
   error: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   onSubmit() {
-    if (this.usuario === 'admin' && this.password === '1234') {
-      // Autenticación exitosa (esto es un ejemplo)
-      this.router.navigate(['/usuarios']); // o la ruta que quieras mostrar después
-    } else {
-      this.error = 'Usuario o contraseña incorrectos';
-    }
-  }
+    this.error = null;
 
+    const data = {
+      id_usuario: this.id_usuario,
+      contrasena: this.contrasena
+    };
+
+    this.authService.login(data).subscribe({
+      next: () => {
+        this.router.navigate(['/store']);
+      },
+      error: err => {
+        this.error = err.error?.error || 'Error al iniciar sesión';
+      }
+    });
+  }
     navigateToRegister() {
     this.router.navigate(['/register']);
   }

@@ -8,7 +8,7 @@
         type="text"
         id="usuario"
         name="usuario"
-        [(ngModel)]="usuario"
+        [(ngModel)]="id_usuario"
         required
       />
     </div>
@@ -32,7 +32,7 @@
         type="password"
         id="password"
         name="password"
-        [(ngModel)]="password"
+        [(ngModel)]="contrasena"
         required
       />
     </div>
@@ -49,4 +49,5 @@
   <div *ngIf="error" class="error">
     {{ error }}
   </div>
+
 </div>
